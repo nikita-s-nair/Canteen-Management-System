@@ -27,6 +27,7 @@ function CanteenList() {
     };
 
     return (
+        <body>
         <div>
             <h2>Available Canteens</h2>
             <ul>
@@ -37,6 +38,7 @@ function CanteenList() {
                 ))}
             </ul>
         </div>
+        </body>
     );
 }
 

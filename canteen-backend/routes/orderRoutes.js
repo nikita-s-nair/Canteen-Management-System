@@ -1,26 +1,32 @@
+// routes/order.js
 const express = require('express');
 const router = express.Router();
-const { Order, OrderItem } = require('../models/index');
+const { Order, OrderItem } = require('../models'); // Import models
 
-// Place a new order
-router.post('/', async (req, res) => {
-    const { user_id, canteen_id, items, total_amount } = req.body;
-    try {
-        const newOrder = await Order.create({ user_id, canteen_id, total_amount });
-        await OrderItem.bulkCreate(items.map(item => ({ ...item, order_id: newOrder.order_id })));
-        res.status(201).json({ message: 'Order placed successfully', order_id: newOrder.order_id });
-    } catch (error) {
-        res.status(500).json({ error: 'Error placing order' });
-    }
-});
+router.post('/place-order', async (req, res) => {
+    const { userId, canteenId, cartItems, totalAmount } = req.body;
 
-// Fetch orders for a user
-router.get('/user/:userId', async (req, res) => {
     try {
-        const orders = await Order.findAll({ where: { user_id: req.params.userId } });
-        res.json(orders);
+        const order = await Order.create({
+            user_id: userId,
+            canteen_id: canteenId,
+            status: 'Pending',
+            total_amount: totalAmount,
+        });
+
+        const orderItems = cartItems.map(item => ({
+            order_id: order.order_id,
+            item_id: item.item_id,
+            quantity: item.quantity,
+            price: item.price,
+        }));
+
+        await OrderItem.bulkCreate(orderItems);
+
+        res.status(201).json({ success: true, message: 'Order placed successfully!', order });
     } catch (error) {
-        res.status(500).json({ error: 'Error fetching orders' });
+        console.error('Error placing order:', error);
+        res.status(500).json({ success: false, message: 'Failed to place order.' });
     }
 });
 

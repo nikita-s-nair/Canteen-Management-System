@@ -1,47 +1,49 @@
-import React, { useState } from 'react';
+// components/OrderCart.js
+import React from 'react';
+import { useCart } from '../context/CartContext';
 import api from '../services/api';
+import { useNavigate } from 'react-router-dom';
 
-function OrderCart({ userId, canteenId, menuItems }) {
-    const [cart, setCart] = useState([]);
-    const [totalAmount, setTotalAmount] = useState(0);
+function OrderCart() {
+    const { cartItems, calculateTotal, clearCart } = useCart();
+    const navigate = useNavigate();
 
-    // Function to add items to the cart
-    const addToCart = (item) => {
-        setCart([...cart, item]);
-        setTotalAmount(totalAmount + item.price);
-    };
+    const handlePlaceOrder = async () => {
+        const userId = 1; // Replace with actual user ID
+        const canteenId = 1; // Replace with actual canteen ID
+        const totalAmount = calculateTotal();
 
-    // Place order by sending data to the backend
-    const placeOrder = async () => {
-        const items = cart.map(item => ({
-            item_id: item.item_id,
-            quantity: 1,
-            price: item.price,
-        }));
         try {
-            const response = await api.post('/orders', { user_id: userId, canteen_id: canteenId, items, total_amount: totalAmount });
-            alert('Order placed successfully! Order ID: ' + response.data.order_id);
-            setCart([]);
-            setTotalAmount(0);
+            const response = await api.post('/order/place-order', {
+                userId,
+                canteenId,
+                cartItems,
+                totalAmount,
+            });
+
+            if (response.data.success) {
+                alert('Order placed successfully!');
+                clearCart();
+                navigate('/order-success'); // Redirect to success page
+            }
         } catch (error) {
             console.error('Error placing order:', error);
-            alert('Failed to place order');
+            alert('Failed to place order.');
         }
     };
 
     return (
         <div>
-            <h2>Order Cart</h2>
+            <h2>Your Cart</h2>
             <ul>
-                {menuItems.map(item => (
+                {cartItems.map(item => (
                     <li key={item.item_id}>
-                        {item.name} - ${item.price}
-                        <button onClick={() => addToCart(item)}>Add to Cart</button>
+                        {item.name} - {item.quantity} x ${item.price}
                     </li>
                 ))}
             </ul>
-            <h3>Cart Total: ${totalAmount}</h3>
-            <button onClick={placeOrder} disabled={cart.length === 0}>Place Order</button>
+            <h3>Total: ${calculateTotal()}</h3>
+            <button onClick={handlePlaceOrder}>Place Order</button>
         </div>
     );
 }

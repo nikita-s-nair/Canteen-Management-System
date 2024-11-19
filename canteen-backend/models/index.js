@@ -1,4 +1,4 @@
-const { DataTypes } = require('sequelize');
+/*const { DataTypes } = require('sequelize');
 const sequelize = require('../config/db');
 
 const User = require('./User');
@@ -119,3 +119,4 @@ const Canteen = sequelize.define('Canteen', {
     timestamps: false,      // Disables createdAt and updatedAt fields
 });
 module.exports = { User, Canteen, MenuItem, Order, OrderItem, Payment };
+*/

@@ -6,6 +6,7 @@ import OrderCart from './components/OrderCart';
 import OrderHistory from './components/OrderHistory';
 import PaymentForm from './components/PaymentForm';
 import Notifications from './components/Notifications';
+import SignUp from './components/SignUp'; // Import the SignUp component
 
 function App() {
     const userId = 1; // Mock user ID for demo, replace with actual user authentication
@@ -15,6 +16,10 @@ function App() {
             <div>
                 <h1>Canteens System</h1>
                 <Routes>
+                    {/* Add the route for signup */}
+                    <Route path="/signup" element={<SignUp />} />
+
+                    {/* Other routes */}
                     <Route path="/" element={<CanteenList />} />
                     <Route path="/menu/:canteenId" element={<Menu />} />
                     <Route path="/cart" element={<OrderCart userId={userId} />} />
