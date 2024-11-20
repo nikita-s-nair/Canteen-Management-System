@@ -10,7 +10,7 @@ const getMenuItemsByCanteen = async (req, res) => {
 
     try {
         const menuItems = await db.query(
-            'SELECT * FROM menuitems WHERE canteen_id = :canteenId',
+            'SELECT * FROM menuitem WHERE canteen_id = :canteenId',
             {
                 replacements: { canteenId }, // Use named replacements
                 type: QueryTypes.SELECT // Specify the query type

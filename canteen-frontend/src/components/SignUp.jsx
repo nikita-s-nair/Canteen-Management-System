@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate for navigation
 import axios from 'axios'; // For sending data to the backend
 import './SignUpstyle.css'; // Use the same styles as in the HTML
 
 function SignUp() {
-    const navigate = useNavigate();
+    const navigate = useNavigate(); // Initialize useNavigate hook
     const [formData, setFormData] = useState({
         name: '',
         SRN: '',
-        email: '', // Add email field
+        email: '',
         password: '',
         confirmPassword: '',
     });
@@ -35,13 +35,15 @@ function SignUp() {
             const response = await axios.post('http://localhost:5000/api/signup', {
                 name,
                 institution_id: SRN,
-                email, // Include email here
+                email,
                 password,
-                role: 'Student', // Assuming the role is 'Student' by default
+                role: 'Student',
             });
             if (response.status === 201) {
-                // Redirect to the canteens page upon successful signup
-                navigate('/canteens');
+                // Store user data in sessionStorage
+                sessionStorage.setItem('user', JSON.stringify(response.data.user));
+                // Redirect to CanteenList page after successful signup
+                navigate('/');
             }
         } catch (err) {
             setError(err.response?.data?.message || 'An error occurred during sign-up');
@@ -79,7 +81,7 @@ function SignUp() {
                         />
                     </div>
                     <div className="input-group">
-                        <label htmlFor="email">Email</label> {/* New input for email */}
+                        <label htmlFor="email">Email</label>
                         <input
                             type="email"
                             id="email"

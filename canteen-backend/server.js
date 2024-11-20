@@ -7,8 +7,7 @@ const orderRoutes = require('./routes/orderRoutes');
 const paymentRoutes = require('./routes/paymentRoutes');
 const canteenRoutes = require('./routes/canteenRoutes');
 const userRoutes = require('./routes/user');
-
-
+const signInRoutes = require('./routes/signInRoute');
 
 const app = express();
 app.use(cors());
@@ -18,6 +17,7 @@ app.use((err,req,res,next)=>{
     console.log(req.path,req.method)
 })
 
+app.use('/api/signin', signInRoutes);
 app.use('/api/signup', userRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/menu/', menuRoutes);
