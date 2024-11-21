@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import api from '../services/api';
-import './canteen1.css'; // Ensure this file has the styles from your HTML example
+import './canteen1.css';
 
 function Menu() {
-    const { canteenId } = useParams(); // Get the canteenId from URL
+    const { canteenId } = useParams();
     const navigate = useNavigate();
     const [menuItems, setMenuItems] = useState([]);
     const [cart, setCart] = useState({});
@@ -35,14 +35,37 @@ function Menu() {
         }));
     };
 
-    const placeOrder = () => {
-        navigate(`/orderCart`, { state: { cart, canteenId, menuItems } });
-    };
-
     const calculateTotal = () => {
         return menuItems.reduce((total, item) => {
             return total + (cart[item.item_id] || 0) * item.price;
         }, 0);
+    };
+
+    const handleCheckout = () => {
+        const totalAmount = calculateTotal();
+        const userId = JSON.parse(sessionStorage.getItem('user'))?.user_id; // Retrieve user ID
+        const cartData = Object.keys(cart).map((itemId) => {
+            const item = menuItems.find((menuItem) => menuItem.item_id === parseInt(itemId));
+            return {
+                item_id: item.item_id,
+                name: item.name,
+                quantity: cart[itemId],
+                price: item.price,
+            };
+        });
+
+        if (!userId) {
+            alert('User not logged in. Please log in to continue.');
+            return;
+        }
+
+        // Store data in sessionStorage
+        sessionStorage.setItem('cartData', JSON.stringify(cartData));
+        sessionStorage.setItem('totalAmount', totalAmount);
+        sessionStorage.setItem('canteenId', canteenId);
+
+        // Navigate to the payment page
+        navigate('/payment');
     };
 
     return (
@@ -52,7 +75,7 @@ function Menu() {
                 <p>Choose your food and add it to your cart!</p>
             </header>
             <div className="menu">
-                {menuItems.map(item => (
+                {menuItems.map((item) => (
                     <div className="menu-category" key={item.category}>
                         <h2>{item.category}</h2>
                         <div className="menu-item">
@@ -62,9 +85,13 @@ function Menu() {
                             </div>
                             {cart[item.item_id] > 0 ? (
                                 <>
-                                    <button className="cart-btn" onClick={() => decrementItem(item.item_id)}>-</button>
+                                    <button className="cart-btn" onClick={() => decrementItem(item.item_id)}>
+                                        -
+                                    </button>
                                     <span>{cart[item.item_id]}</span>
-                                    <button className="cart-btn" onClick={() => incrementItem(item.item_id)}>+</button>
+                                    <button className="cart-btn" onClick={() => incrementItem(item.item_id)}>
+                                        +
+                                    </button>
                                 </>
                             ) : (
                                 <button className="add-to-cart" onClick={() => incrementItem(item.item_id)}>
@@ -78,8 +105,8 @@ function Menu() {
             <div className="cart">
                 <h2>Your Cart</h2>
                 <ul id="cart-items">
-                    {Object.keys(cart).map(itemId => {
-                        const item = menuItems.find(menuItem => menuItem.item_id === parseInt(itemId));
+                    {Object.keys(cart).map((itemId) => {
+                        const item = menuItems.find((menuItem) => menuItem.item_id === parseInt(itemId));
                         if (!item || cart[itemId] === 0) return null;
                         return (
                             <li key={itemId}>
@@ -91,7 +118,7 @@ function Menu() {
                     })}
                 </ul>
                 <p id="total-amount">Total: ₹{calculateTotal()}</p>
-                <button id="checkout-btn" onClick={placeOrder}>
+                <button id="checkout-btn" onClick={handleCheckout}>
                     Checkout
                 </button>
             </div>

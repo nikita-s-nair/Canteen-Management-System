@@ -21,8 +21,8 @@ app.use('/api/signin', signInRoutes);
 app.use('/api/signup', userRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/menu/', menuRoutes);
-app.use('/api/order', orderRoutes);
-app.use('/api/payment', paymentRoutes);
+app.use('/api/create-order', orderRoutes);
+app.use('/api/make-payment', paymentRoutes);
 app.use('/api/canteens', canteenRoutes);
 
 

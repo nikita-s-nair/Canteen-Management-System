@@ -49,7 +49,8 @@ function App() {
                     <Route path="/menu/:canteenId" element={<Menu />} />
                     <Route path="/cart" element={<OrderCart userId={user?.user_id} />} />
                     <Route path="/history" element={<OrderHistory userId={user?.user_id} />} />
-                    <Route path="/payment/:orderId" element={<PaymentForm />} />
+                    <Route path="/payment/" element={<PaymentForm />} />
+
                     <Route path="/notifications" element={<Notifications userId={user?.user_id} />} />
                 </Routes>
             </div>
