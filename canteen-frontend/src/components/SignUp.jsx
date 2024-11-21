@@ -25,12 +25,12 @@ function SignUp() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         const { name, SRN, email, password, confirmPassword } = formData;
-
+    
         if (password !== confirmPassword) {
             setError('Passwords do not match');
             return;
         }
-
+    
         try {
             const response = await axios.post('http://localhost:5000/api/signup', {
                 name,
@@ -39,6 +39,7 @@ function SignUp() {
                 password,
                 role: 'Student',
             });
+    
             if (response.status === 201) {
                 // Store user data in sessionStorage
                 sessionStorage.setItem('user', JSON.stringify(response.data.user));
@@ -49,6 +50,7 @@ function SignUp() {
             setError(err.response?.data?.message || 'An error occurred during sign-up');
         }
     };
+    
 
     return (
         <div className="container">

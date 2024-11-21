@@ -1,0 +1,126 @@
+/* General body styling */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f0fdf0; /* Very light green background */
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* Payment container */
+.payment-container {
+    width: 80%;
+    max-width: 600px;
+    padding: 20px;
+    background-color: #ffffff; /* White card background */
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+/* Section headings */
+h2 {
+    font-size: 28px;
+    color: #228B22; /* Forest green */
+    margin-bottom: 20px;
+}
+
+h3 {
+    font-size: 22px;
+    color: #2e8b57; /* Sea green */
+    margin: 15px 0;
+}
+
+/* Order summary */
+ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0 0 15px 0;
+    text-align: left;
+}
+
+li {
+    font-size: 16px;
+    margin: 5px 0;
+    padding: 8px;
+    background-color: #e8ffe8; /* Pale green background for items */
+    border-radius: 8px;
+    color: #2f4f2f; /* Dark green text */
+}
+
+/* Total amount */
+p {
+    font-size: 18px;
+    font-weight: bold;
+    color: #228B22;
+    margin: 10px 0;
+}
+
+/* Payment mode dropdown */
+select {
+    width: 100%;
+    padding: 10px;
+    margin: 15px 0;
+    border: 1px solid #dcdcdc;
+    border-radius: 5px;
+    background-color: #f8fff8; /* Subtle green background */
+    font-size: 16px;
+    color: #2f4f2f;
+    outline: none;
+    transition: border 0.3s ease;
+}
+
+select:focus {
+    border: 1px solid #228B22; /* Green border on focus */
+}
+
+/* Pay button */
+button {
+    width: 100%;
+    padding: 12px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #ffffff;
+    background-color: #228B22; /* Forest green button */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+button:hover {
+    background-color: #2e8b57; /* Darker green on hover */
+    transform: translateY(-2px);
+}
+
+button:active {
+    background-color: #145214; /* Even darker green on click */
+    transform: translateY(0);
+}
+
+/* Responsive design */
+@media (max-width: 600px) {
+    .payment-container {
+        width: 95%;
+        padding: 15px;
+    }
+
+    h2 {
+        font-size: 24px;
+    }
+
+    h3 {
+        font-size: 20px;
+    }
+
+    li {
+        font-size: 14px;
+    }
+
+    button {
+        font-size: 16px;
+    }
+}

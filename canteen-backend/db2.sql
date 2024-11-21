@@ -120,5 +120,20 @@ END WHILE;
 ->
 SELECT new_order_id AS order_id;
 ->->
-END // Query OK,
-0 rows affected (0.01 sec) mysql > mysql > DELIMITER;
+END // DELIMITER;
+DELIMITER // mysql > mysql > CREATE TRIGGER validate_institution_id->BEFORE
+INSERT ON Users->FOR EACH ROW->BEGIN->-- Check if the institution_id starts with 'PES'
+->IF LEFT(NEW.institution_id, 3) != 'PES' THEN->SIGNAL SQLSTATE '45000'->
+SET MESSAGE_TEXT = 'Institution ID must start with "PES"';
+->
+END IF;
+->
+END;
+->// DELIMITER;
+DELIMITER // CREATE TRIGGER validate_password_length BEFORE
+INSERT ON Users FOR EACH ROW BEGIN -- Check if the password length is less than 8 characters
+    IF LENGTH(NEW.password) < 8 THEN SIGNAL SQLSTATE '45000'
+SET MESSAGE_TEXT = 'Password must be at least 8 characters long.';
+END IF;
+END;
+// DELIMITER;

@@ -111,8 +111,6 @@ function Menu() {
                         return (
                             <li key={itemId}>
                                 {item.name} - ₹{item.price} x {cart[itemId]}
-                                <button onClick={() => incrementItem(item.item_id)}>+</button>
-                                <button onClick={() => decrementItem(item.item_id)}>-</button>
                             </li>
                         );
                     })}

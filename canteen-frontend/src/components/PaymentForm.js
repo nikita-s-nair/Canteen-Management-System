@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import api from '../services/api';
+import './Payment.css'; // Use the same styles as in the HTML
+
 
 function Payment() {
     const navigate = useNavigate();
@@ -60,7 +62,7 @@ function Payment() {
                 const { orderId } = response.data;
 
                 alert(`Order placed successfully!Order ID: ${orderId}`);
-                navigate('/order-summary');
+                navigate('/');
             } else {
                 alert('Failed to place order. Try again.');
             }

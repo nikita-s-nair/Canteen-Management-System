@@ -8,6 +8,8 @@ const paymentRoutes = require('./routes/paymentRoutes');
 const canteenRoutes = require('./routes/canteenRoutes');
 const userRoutes = require('./routes/user');
 const signInRoutes = require('./routes/signInRoute');
+const adminRoutes = require('./routes/adminRoutes'); // Import the admin routes
+
 
 const app = express();
 app.use(cors());
@@ -24,6 +26,7 @@ app.use('/api/menu/', menuRoutes);
 app.use('/api/create-order', orderRoutes);
 app.use('/api/make-payment', paymentRoutes);
 app.use('/api/canteens', canteenRoutes);
+app.use('/api/admin', adminRoutes); // Add the admin routes under /api/admin
 
 
 const PORT = process.env.PORT || 5000;

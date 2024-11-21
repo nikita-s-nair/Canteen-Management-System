@@ -8,6 +8,8 @@ import PaymentForm from './components/PaymentForm';
 import Notifications from './components/Notifications';
 import SignUp from './components/SignUp';
 import Login from './components/Login';
+import AdminCanteens from './components/AdminCanteens';
+import AdminMenu from './components/AdminMenu';
 
 function App() {
     const [user, setUser] = useState(null);
@@ -31,7 +33,7 @@ function App() {
     return (
         <Router>
             <div>
-                <h1>Canteens System</h1>
+                <h1></h1>
                 {/* Display user info and logout button when logged in */}
                 {user && (
                     <div>
@@ -44,7 +46,10 @@ function App() {
                     <Route path="/signup" element={<SignUp />} />
                     {/* Route for login */}
                     <Route path="/signin" element={<Login setUser={setUser} />} />
+
                     {/* Other routes */}
+                    <Route path="/admin/canteens" element={<AdminCanteens />} />
+                    <Route path="/admin/canteens/:canteenId/menu" element={<AdminMenu />} />
                     <Route path="/" element={<CanteenList />} />
                     <Route path="/menu/:canteenId" element={<Menu />} />
                     <Route path="/cart" element={<OrderCart userId={user?.user_id} />} />
