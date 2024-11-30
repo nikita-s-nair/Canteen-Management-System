@@ -10,6 +10,8 @@ import SignUp from './components/SignUp';
 import Login from './components/Login';
 import AdminCanteens from './components/AdminCanteens';
 import AdminMenu from './components/AdminMenu';
+import OrderCollect from './components/OrderCollect';
+
 
 function App() {
     const [user, setUser] = useState(null);
@@ -46,6 +48,8 @@ function App() {
                     <Route path="/signup" element={<SignUp />} />
                     {/* Route for login */}
                     <Route path="/signin" element={<Login setUser={setUser} />} />
+                    <Route path="/orderCollect/:orderId" element={<OrderCollect setUser={setUser} />} />
+
 
                     {/* Other routes */}
                     <Route path="/admin/canteens" element={<AdminCanteens />} />

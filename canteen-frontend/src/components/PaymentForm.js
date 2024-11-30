@@ -60,9 +60,10 @@ function Payment() {
 
             if (response.status === 201) {
                 const { orderId } = response.data;
+                sessionStorage.setItem('orderId', orderId);
 
                 alert(`Order placed successfully!Order ID: ${orderId}`);
-                navigate('/');
+                navigate('/orderCollect');
             } else {
                 alert('Failed to place order. Try again.');
             }
